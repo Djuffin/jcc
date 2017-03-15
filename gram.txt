@@ -1,0 +1,114 @@
+programm ::=  { (function_def | declare) }
+
+function_def ::= type identifier '(' arglist ')' block
+
+arglist ::= argdef?  {',' argdef}
+
+argdef ::= type identifier 
+
+
+/* STATEMENT */
+
+statement ::= (expression_statement | if_statement | while_statement | do_statement | 
+                for_statement | declare | block | continue_statement | break_statement | return_statement) 
+
+block ::= '{' {statement} '}'
+
+expression_statement ::= expression? ';'
+
+declare ::= type identifier ('=' expression)? {',' identifier  ('=' expression)? } ';'
+
+if_statement ::= 'if' '(' expression ')' statement ('else' statement)?
+
+while_statement ::= 'while' '(' expression ')' statement
+
+for_statement ::= 'for' '(' expression? ';' expression? ';'  expression? ')' statement
+
+do_statement ::= 'do' statement 'while' '(' expression ')' ';'
+
+break_statement ::= 'break' ';'
+
+return_statement ::= 'return' expression? ';'
+
+continue_statement ::= 'continue' ';'
+
+/* EXPRESSION */
+
+expression ::= assign | logical_ops
+
+assign ::= logical_ops '=' expression
+
+
+
+logical_ops ::= logical_or | logical_and  | compare_ops
+
+logical_or ::= compare_ops '||' logical_ops
+
+logical_and ::= compare_ops '&&' logical_ops
+
+logical_not ::= '!' logical_ops
+
+
+compare_ops ::= equality | inequality | add_ops
+
+equality ::= add_ops '==' compare_ops 
+
+inequality ::= add_ops '!=' compare_ops
+
+less ::= add_ops '<' compare_ops 
+
+great ::= add_ops '>' compare_ops 
+
+less ::= add_ops '<=' compare_ops 
+
+great ::= add_ops '>=' compare_ops 
+
+
+
+add_ops ::= add | sub | mult_ops
+
+add ::= mult_ops '+' add_ops
+
+sub ::= mult_ops '-' add_ops
+
+
+mult_ops ::= mul | div | mod | unary_ops
+
+mult ::= term '*' mult_ops
+
+div ::= term '/' mult_ops
+
+mod ::= term '%' mult_ops
+
+
+unary_ops ::= unary_minus | unary_plus | prefex_increment | postfix_increment | prefex_decrement | postfix_decrement | term
+
+prefex_increment ::= '++' term
+
+postfix_increment ::=  term '++'
+
+prefex_decrement  ::= '--' term
+
+postfix_decrement ::= term '--'
+
+unary_minus ::= '-' mult_ops
+
+unary_plus ::= '+' mult_ops
+
+
+
+term ::= parentheses | variable | const | function_call | type_cast
+
+parentheses ::= '(' expression ')'
+
+function_call ::= identifier '(' expression? {',' expression} ')'   
+
+type_cast ::= type '(' expression ')'
+
+variable ::= identifier
+
+type ::= ('int' | 'double' | 'char' | 'string' | 'void') 
+
+a? - zero or one
+{a} - zero or more
+a | b - a or b
